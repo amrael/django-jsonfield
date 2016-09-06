@@ -22,7 +22,7 @@ DB_TYPE_CACHE_KEY = (
 )
 
 
-class JSONField(six.with_metaclass(models.SubfieldBase, models.Field)):
+class JSONField(models.Field):
     """
     A field that will ensure the data entered into it is valid JSON.
     """
@@ -87,6 +87,9 @@ class JSONField(six.with_metaclass(models.SubfieldBase, models.Field)):
         if connection.vendor == 'oracle':
             return 'long'
         return 'text'
+
+    def from_db_value(self, value, expression, connection, context):
+        return self.to_python(value)
 
     def to_python(self, value):
         if isinstance(value, six.string_types):
