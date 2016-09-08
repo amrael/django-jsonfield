@@ -11,7 +11,7 @@ class JSONWidget(forms.Textarea):
         if value is None:
             value = ""
         if not isinstance(value, six.string_types):
-            value = json.dumps(value, indent=2, default=default)
+            value = json.dumps(value, indent=2, default=default, ensure_ascii=False)
         return super(JSONWidget, self).render(name, value, attrs)
 
 
